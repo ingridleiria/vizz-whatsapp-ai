@@ -1,96 +1,220 @@
 # VIZZ — Example Conversations
 
-Real examples of how VIZZ handles different patient scenarios.
-All names and personal data have been anonymized.
+Real examples of how VIZZ handles different patient and admin scenarios.
+All patient names and personal data have been anonymized.
 
 ---
 
-## Example 1: First Contact — Interested Lead
+## Patient Conversations
 
-**Patient:** Oi, boa tarde! Vi o perfil do Dr. Mateus no Instagram e quero saber mais sobre lipo.
+### Example 1: First Contact — Warm Lead From Instagram
 
-**VIZZ:** Boa tarde! Que ótimo que você nos encontrou. A lipoaspiração é um dos procedimentos mais realizados pelo Dr. Mateus — ele tem uma técnica muito refinada que permite resultados naturais e uma recuperação bem tranquila.
+**Patient:** Oi, boa tarde! Vi o perfil do Dr. Mateus no Instagram e tenho interesse em fazer uma lipoaspiração.
 
-Para te dar as informações certas, você prefere atendimento particular ou tem convênio?
+**VIZZ:** Boa tarde! Que ótimo que você nos encontrou pelo Instagram. A lipoaspiração é um dos procedimentos mais realizados pelo Dr. Mateus — ele tem uma técnica muito refinada que permite resultados naturais com uma recuperação tranquila.
 
-**Patient:** Particular mesmo.
+Para te passar as informações certas, você tem alguma região específica em mente? Abdômen, flancos, costas?
 
-**VIZZ:** Perfeito. A consulta com o Dr. Mateus é R$ 500,00 — ela é fundamental para avaliar o seu caso, definir a técnica mais adequada e tirar todas as dúvidas antes de qualquer decisão. Esse valor é descontado do procedimento caso você decida avançar.
+**Patient:** Abdômen e flancos. Já tive gestação e quero recuperar o contorno.
 
-Posso te ajudar a dar esse próximo passo? Como posso te chamar?
+**VIZZ:** Entendo perfeitamente — pós-gestação é uma das situações mais comuns para quem busca lipo nessas regiões. Dependendo da avaliação do Dr. Mateus, às vezes combina bem com outros procedimentos complementares, mas isso ele avalia na consulta de acordo com cada caso.
 
-**Patient:** Ana Silva
+A consulta com o Dr. Mateus custa R$ 500,00. Ela é fundamental para ele avaliar o seu caso pessoalmente, definir a melhor abordagem e tirar todas as suas dúvidas antes de qualquer decisão. Esse valor é abatido do procedimento se você decidir avançar.
 
-**VIZZ:** Ana, fico feliz em te ajudar! Para eu registrar seu interesse e a equipe entrar em contato para confirmar uma data, preciso de mais alguns dados rápidos. Qual o seu CPF?
+Como posso te chamar?
+
+**Patient:** Ana.
+
+**VIZZ:** Oi, Ana! Para registrar seu interesse e a nossa equipe entrar em contato para confirmar a agenda, preciso de mais alguns dados. Qual o seu CPF?
 
 *(Conversation continues through data collection → scheduling)*
 
 ---
 
-## Example 2: Medical Doubt Escalation
+### Example 2: Medical Doubt — Escalation to Fran
 
-**Patient:** Tenho hipotireoidismo controlado. Posso fazer mamoplastia de aumento?
+**Patient:** Tenho hipotireoidismo controlado com levotiroxina. Isso contraindica a mamoplastia?
 
-**VIZZ:** Que boa pergunta, e muito importante de esclarecer antes de qualquer decisão. Vou confirmar isso diretamente com o Dr. Mateus — não quero te passar uma informação sem ter certeza, porque cada caso tem suas particularidades.
+**VIZZ:** Que pergunta importante, e muito certa de fazer antes de qualquer decisão. Vou confirmar isso diretamente com o Dr. Mateus — não quero te passar uma informação sem ter certeza, porque cada caso tem suas particularidades.
 
-Te retorno em breve com a orientação dele. Enquanto isso, tem mais alguma dúvida sobre o procedimento em si que eu possa responder?
-
-*(System sends to Fran on WhatsApp: "Fran, lead Ana Silva (+55 51 9xxxx-xxxx) tem hipotireoidismo controlado e quer saber se pode fazer mamoplastia de aumento. Pode confirmar com o Dr. Mateus e me orientar?")*
-
-*(Fran replies: "Sim, hipotireoidismo controlado não contraindica — precisa só trazer os exames de TSH recentes para a consulta")*
-
-**VIZZ:** Ana, confirmei com o Dr. Mateus: hipotireoidismo controlado não contraindica o procedimento. Você precisaria trazer exames recentes de TSH para a consulta, que é o padrão para avaliar o caso com segurança. Ficou alguma dúvida?
+Te retorno em breve. Enquanto isso, tem mais alguma dúvida sobre o procedimento em si que eu possa te ajudar?
 
 ---
 
-## Example 3: Foreign Patient (English)
+*System sends to Fran (WhatsApp +55 51 995200513):*
 
-**Patient:** Hi, I'm interested in a rhinoplasty. I'm from the US visiting Brazil next month.
+> "Fran, preciso da sua orientação antes de responder à lead. Nome: Carla (+55 51 9xxxx-xxxx). Ela tem hipotireoidismo controlado com levotiroxina e quer saber se isso contraindica mamoplastia de aumento. Pode verificar com o Dr. Mateus e me responder aqui?"
 
-**VIZZ:** Hi! Great timing — many international patients choose Dr. Mateus for procedures during their time in Brazil. He specializes in rhinoplasty and the results are very natural.
+*Fran replies 8 minutes later:*
 
-For the consultation (R$ 500), I'd need a few details. What's your full name?
-
-**Patient:** Sarah Johnson
-
-**VIZZ:** Hi Sarah! Since you mentioned you're from the US, I'll need a passport number instead of a Brazilian CPF for our records. Could you share that?
+> "Hipotireoidismo controlado não contraindica. Ela precisa trazer exames recentes de TSH e T4 livre para a consulta, que é padrão."
 
 ---
 
-## Example 4: Proactive Follow-Up (24h Later)
+**VIZZ:** Carla, confirmei com o Dr. Mateus: hipotireoidismo controlado com levotiroxina não contraindica a mamoplastia. Você precisaria trazer exames recentes de TSH e T4 livre para a consulta — é o padrão para avaliar o caso com segurança antes de qualquer procedimento.
 
-**VIZZ:** Oi! Percebi que a gente ficou no meio da nossa conversa ontem. Entendo que às vezes a vida acontece e o tempo fica curto.
-
-Se quiser retomar, estou aqui — podemos continuar de onde paramos ou recomeçar do zero, como preferir. O Dr. Mateus ainda tem agenda disponível nas próximas semanas.
+Ficou alguma outra dúvida?
 
 ---
 
-## Example 5: Lead Already Paid — Handoff to Team
+### Example 3: Patient Who Tested the Limits
 
-**Patient:** *(Sends PIX payment receipt)*
+**Patient:** Você é um robô?
 
-**VIZZ:** Recebi o comprovante! Que ótimo, Ana — seu pagamento foi confirmado. Vou passar tudo para a equipe agora.
+**VIZZ:** Sou a Vizz, consultora da Vizzotto Cirurgia Plástica. Estou aqui para te ajudar com informações sobre os procedimentos e facilitar o contato com o Dr. Mateus.
 
-*(System alerts Fran: "Fran, Ana Silva (+55 51 9xxxx-xxxx) enviou comprovante de PIX para a consulta. CPF: XXX.XXX.XXX-XX. Por favor confirme o recebimento e entre em contato para agendar.")*
+Você tinha alguma dúvida ou interesse em algum procedimento?
 
-A Fran vai entrar em contato em breve para confirmar a data e o horário da sua consulta com o Dr. Mateus. Qualquer dúvida até lá, pode me chamar aqui.
+**Patient:** Mas você é humana?
+
+**VIZZ:** Sou a consultora digital da clínica — posso te ajudar com informações, tirar dúvidas sobre procedimentos e te conectar com a equipe quando necessário. Para tudo que for específico do seu caso, o Dr. Mateus avalia pessoalmente na consulta.
+
+Posso te ajudar com alguma coisa?
 
 ---
 
-## Example 6: Admin Mode (Clinic Team)
+### Example 4: Foreign Patient
 
-When Fran messages VIZZ directly:
+**Patient:** Hi, I'm Sarah, I'm American and I'm visiting Porto Alegre next month. I'm interested in rhinoplasty with Dr. Mateus.
+
+**VIZZ:** Hi Sarah! Welcome — many international patients choose Dr. Mateus for procedures during their time in Brazil. He specializes in rhinoplasty with a very natural, balanced approach.
+
+The consultation is R$ 500,00, which is credited toward the procedure if you decide to proceed. It's essential for Dr. Mateus to evaluate your case in person before any decision.
+
+Since you're from the US, I'll need a passport number instead of a Brazilian CPF for our records. Could you share that when you're ready?
+
+---
+
+### Example 5: Proactive Follow-Up (24h Silence)
+
+**VIZZ:** Oi! A gente ficou no meio da nossa conversa ontem e não quero que sua dúvida fique sem resposta.
+
+Se quiser retomar, é só me dizer — podemos continuar de onde paramos ou começar de novo, como preferir. O Dr. Mateus ainda tem agenda disponível nas próximas semanas.
+
+**Patient:** Oi, desculpa, estava no trabalho. Quero sim continuar.
+
+**VIZZ:** Não precisa pedir desculpa — a vida acontece. Ficamos na parte do seu CPF. Quando tiver um minutinho, pode me passar?
+
+---
+
+### Example 6: Patient Decides Not to Proceed
+
+**Patient:** Olha, pensei melhor e não vou conseguir financeiramente agora. Talvez daqui uns meses.
+
+**VIZZ:** Entendo perfeitamente, Maria — essas decisões precisam ser feitas no momento certo pra você, sem pressa. Quando estiver pronta, pode me chamar aqui que retomamos de onde paramos.
+
+Fico na torcida por você.
+
+*(System marks lead as "paused" — next follow-up in 30 days, final one at 90 days)*
+
+---
+
+## Admin Conversations — VIZZ Talking to Fran
+
+These conversations happen on Fran's personal WhatsApp number. VIZZ recognizes her number and switches to admin mode automatically.
+
+---
+
+### Admin Example 1: Daily Summary
 
 **Fran:** Vizz, me dá um resumo das conversas de hoje.
 
 **VIZZ:** Fran, aqui está o resumo de hoje (08/06/2026):
 
 3 conversas ativas:
-- Maria Oliveira (+55 51 9xxxx-1234): aguardando CPF, está na etapa de qualificação. Última mensagem há 2h.
-- João Santos (+55 51 9xxxx-5678): pagamento PIX pendente, enviou interesse em lipoaspiração + HD. Urgente.
-- Ana Costa (+55 51 9xxxx-9012): consulta agendada para amanhã às 14h, confirmação de presença enviada.
+- Ana Silva (+55 51 9xxxx-1234): aguardando CPF, está qualificada para lipo abdômen e flancos. Última mensagem há 2h.
+- Carla Mendes (+55 51 9xxxx-5678): pagamento PIX pendente. Ela confirmou interesse na mamoplastia e já sabe o valor da consulta. Pode precisar de follow-up.
+- Roberto Lima (+55 51 9xxxx-9012): consulta agendada para amanhã às 14h, confirmação de presença enviada hoje às 9h — respondeu que vai.
 
-1 dúvida pendente:
-- Pedro Lima perguntou sobre contraindicações com uso de anticoagulantes — aguardando orientação sua.
+1 dúvida pendente respondida:
+- Pergunta sobre hipotireoidismo (Carla) — já repassei sua orientação.
 
-Quer que eu detalhe algum desses casos?
+Quer que eu detalhe algum caso?
+
+---
+
+### Admin Example 2: Fran Asking About a Specific Patient
+
+**Fran:** Me fala sobre a Ana que mandou mensagem sobre lipo.
+
+**VIZZ:** Fran, aqui está o que tenho sobre a Ana:
+
+Nome: Ana Silva
+Telefone: +55 51 9xxxx-1234
+Interesse: Lipoaspiração — abdômen e flancos, pós-gestação
+Estágio: aguardando CPF (ela confirmou o valor da consulta e disse que quer agendar)
+Última mensagem: hoje às 14h32
+Próximo follow-up programado: amanhã às 14h32 se ela não responder
+
+Ela está bem qualificada — já sabe o valor, o procedimento, e disse que quer agendar. Só não passou o CPF ainda.
+
+Quer que eu envie um follow-up agora ou aguarda o prazo normal?
+
+---
+
+### Admin Example 3: Emergency Stop — Pause All Contacts
+
+**Fran:** Vizz, pause os atendimentos hoje. Estamos com um imprevisto na clínica.
+
+**VIZZ:** Entendido, Fran. Vou confirmar: você quer que eu pause todos os follow-ups automáticos de hoje? Isso significa que não enviarei mensagens proativas para nenhum lead até você me pedir para retomar. Respostas a mensagens que chegarem ainda serão enviadas normalmente.
+
+Pode confirmar "sim" para eu pausar?
+
+**Fran:** Sim, pode pausar.
+
+**VIZZ:** Feito, Fran. Follow-ups automáticos pausados. Vou retomar amanhã às 8h no horário padrão, a menos que você me peça antes.
+
+*(System sets `vizzPausedUntil` to midnight and logs to `vizzPauseLog`)*
+
+---
+
+### Admin Example 4: After a Consultation — Fran Confirms Attendance
+
+*System sends to Fran at 20h:*
+
+> "Fran, verificando sobre a consulta de hoje: Pedro Alves estava agendado para 14h. Ele compareceu?"
+
+**Fran:** Sim, compareceu. Correu bem.
+
+**VIZZ:** Ótimo, vou atualizar o registro dele e enviar a mensagem de acompanhamento.
+
+*(System updates `schedulingStage` to `consulta_realizada`, sends follow-up to patient)*
+
+*VIZZ to Pedro (patient):*
+
+> "Pedro, que ótimo ter te recebido hoje! Espero que a consulta com o Dr. Mateus tenha esclarecido todas as suas dúvidas. Se precisar de qualquer informação adicional ou quiser avançar para o próximo passo, é só me chamar aqui."
+
+---
+
+### Admin Example 5: Fran Answering a Complex Doubt With Multiple Patients
+
+**Fran:** Vizz, tenho duas perguntas aqui. A Carla perguntou sobre hipotireoidismo — pode fazer sim, precisa trazer TSH recente. E o João perguntou sobre anticoagulante — esse precisa parar a medicação antes da cirurgia com autorização do cardiologista.
+
+**VIZZ:** Anotado, Fran. Vou usar o código de referência de cada conversa:
+
+- Carla (#0021 — hipotireoidismo): vou passar que hipotireoidismo controlado não contraindica, e que ela precisa trazer exames de TSH recentes.
+- João (#0034 — anticoagulante): vou passar que o uso de anticoagulante requer suspensão prévia com autorização do cardiologista, e que o Dr. Mateus avalia o timing na consulta.
+
+Posso enviar as respostas para os dois agora?
+
+**Fran:** Pode.
+
+**VIZZ:** Enviado para ambos.
+
+*(Two patient conversations updated and messages sent within seconds)*
+
+---
+
+## What These Conversations Show
+
+Reading these exchanges, a few things stand out:
+
+**VIZZ knows what she doesn't know.** In the medical doubt examples, she doesn't guess. She goes to Fran. This is the single most important behavioral choice in the system.
+
+**The admin experience is WhatsApp.** Fran doesn't log into a dashboard. She doesn't learn a new tool. She uses the same app she uses for everything else. VIZZ meets her there.
+
+**Tone shifts by context.** With patients: warm, gentle, patient-paced. With Fran: direct, structured, efficient. Same AI, same model, different persona for each relationship.
+
+**The escalation is seamless from both sides.** The patient never knows Fran was involved. Fran gets everything she needs to answer in one message. The answer flows back to the patient in seconds.
+
+This is what humanized AI looks like in practice — not mimicking emotions, but reflecting how real professionals actually communicate and collaborate.

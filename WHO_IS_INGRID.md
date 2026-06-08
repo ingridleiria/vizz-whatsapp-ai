@@ -8,7 +8,13 @@ This document exists because the VIZZ project raises a question worth answering 
 
 ## Ingrid Leiria
 
-Ingrid is a health economist based in Brazil with a background in clinical operations, academic research, and health systems analysis. She is not a software developer. Before this project, she had never built an application.
+**[LinkedIn → ingrid-leiria](https://kr.linkedin.com/in/ingrid-leiria-25b4767a)**
+
+Ingrid is a Chief of Staff and AI enablement advocate currently based in South Korea, where she is pursuing a PhD in Economics (Applied Microeconometrics). Her academic work sits at the intersection of quantitative methods, health economics, and behavioral decision-making — which is exactly why the VIZZ project made sense to her: it generates real data about how patients make decisions, with real stakes.
+
+In her professional role, she advocates for AI adoption within organizations — helping teams understand not just what AI can do, but how to integrate it into real workflows in ways that actually change outcomes. VIZZ is that conviction expressed as a working system.
+
+She is not a software developer. Before this project, she had never built an application.
 
 She encountered Dr. Vizzotto's problem — the inability to find humanized AI for patient communication — and recognized it as something she could help solve. Not because she had the technical skills, but because she had the domain knowledge and the patience to use AI tools as creative partners.
 

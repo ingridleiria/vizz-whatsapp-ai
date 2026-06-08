@@ -1,10 +1,68 @@
 # VIZZ — WhatsApp AI for a Plastic Surgery Clinic in Brazil
 
-> **"She knows the procedures, she asks for your name, she escalates to the team when she doesn't know — and she feels human."**
+> **"Dr. Vizzotto looked everywhere for an AI that could talk to patients like a human being. He couldn't find one. So we built her."**
 
-VIZZ is a production WhatsApp AI assistant built for **Dr. Mateus Vizzotto's plastic surgery clinic** in Porto Alegre, Brazil. She handles the full patient journey — from first contact to appointment scheduling — entirely over WhatsApp, in Portuguese, with a warm and humanized tone that patients often mistake for a real person.
+VIZZ is a production WhatsApp AI assistant built for **Vizzotto Cirurgia Plástica** — Dr. Mateus Vizzotto's plastic surgery clinic in Rio Grande do Sul, Brazil. She handles the full patient journey — from first contact to appointment scheduling — entirely over WhatsApp, in Portuguese, with a warm and humanized tone that patients often mistake for a real person.
 
-Built with **vibe coding** using [Replit](https://replit.com) + [Claude (Anthropic)](https://anthropic.com) as the primary development tools.
+Built with **vibe coding** using [Replit](https://replit.com) + [Claude (Anthropic)](https://anthropic.com) by **Ingrid Leiria**, who started developing this idea with Dr. Vizzotto in November 2024 and began live patient testing in February 2025. This is not a paid project — Ingrid built VIZZ because she believed it was the right problem to solve.
+
+---
+
+## Why VIZZ Exists — The Real Story
+
+In 2024, Dr. Mateus Vizzotto faced a problem that every busy specialist faces: **the patients he could help were getting lost before they ever reached him.**
+
+People would see his work on Instagram. They'd send a WhatsApp message at 10pm. By morning, three other clinics had already responded. His number stayed unread.
+
+And when responses did happen — through his team — they were inconsistent. Some patients received warmth and information. Others got a generic "we'll call you back." Many never got followed up at all.
+
+Dr. Vizzotto started looking for an AI solution. He tested chatbots. He tried pre-built WhatsApp automation tools. He evaluated what was available in the Brazilian market for medical clinics.
+
+**None of it felt human.**
+
+Every solution felt like a form with a chat bubble on top. Patients would disengage the moment they sensed a script. The responses were transactional, not conversational. There was no warmth, no personality, no clinical knowledge — just rigid flows that failed the moment a patient said something unexpected.
+
+He shared this frustration with Ingrid Leiria, who had been consulting on health economics and clinic operations. They began designing something different — not a chatbot, but a consultant. A person with a name.
+
+They named her **Vizz**.
+
+---
+
+## Who Built VIZZ
+
+**Dr. Mateus Vizzotto** — Plastic surgeon, clinic owner. Provided the clinical knowledge, the patient communication philosophy, and the vision. Asked the hardest questions: "Why does she feel like a robot?" and "What would a real consultant say here?"
+
+**Fran** — Clinic administrative coordinator. The operational brain of the clinic. Became VIZZ's escalation partner — when VIZZ doesn't know something, she asks Fran. Fran's responses shaped VIZZ's knowledge base in real-time.
+
+**Ingrid Leiria** — Developer, product designer, trainer. Wrote zero lines of code manually. Built the entire system through vibe coding with Replit Agent and Claude. Spends hours iterating on VIZZ's responses, catching when she sounds robotic, and pushing her toward something more human. **This is unpaid work** — Ingrid does this because she believes AI can genuinely improve healthcare access in Brazil.
+
+---
+
+## VIZZ Was Not Born Humanized — She Was Taught
+
+This is the most important part of the story.
+
+The first version of VIZZ was technically functional and emotionally cold.
+
+She answered questions correctly. She collected CPF numbers efficiently. She followed the script. And she felt exactly like a script.
+
+Patients would stop responding mid-conversation. Not because VIZZ gave wrong answers — but because the *tone* was wrong. The pacing was wrong. The way she asked for information felt like a form, not a conversation.
+
+Ingrid spent months teaching her. Not by writing code — by describing behavior.
+
+**"She shouldn't ask for CPF right away. She should get to know the patient first."**
+
+**"When someone asks a medical question she's not sure about, she shouldn't just say 'I don't know.' She should tell them she's checking with the doctor and actually do it."**
+
+**"She uses 'olá' too much. Real people in Porto Alegre don't say that."**
+
+**"She repeated the patient's name three times in one message. It feels fake. Reduce it."**
+
+**"She put an emoji. The clinic's consultants never use emojis. Remove all of them. Forever."**
+
+Each iteration made VIZZ slightly more real. The conversations got longer. Patients stopped dropping off. Some started calling her by name — "Vizz, me fala mais sobre a cruroplastia..." — as if they were texting a person they already trusted.
+
+VIZZ is not a product that was configured. She is a persona that was grown.
 
 ---
 
@@ -12,12 +70,12 @@ Built with **vibe coding** using [Replit](https://replit.com) + [Claude (Anthrop
 
 VIZZ is a WhatsApp-native AI consultant that:
 
-- **Qualifies leads** — identifies interest, procedure, payment preference
-- **Collects patient data** — name, CPF (Brazilian tax ID), email, phone
-- **Answers clinical questions** — procedures offered, prices, pre-op requirements
-- **Escalates intelligently** — when she doesn't know something, she messages the clinic admin on WhatsApp and waits for the answer before responding to the patient
-- **Schedules consultations** — guides patients through payment (PIX) and pre-schedules with the team
-- **Follows up proactively** — re-engages leads that went silent after 24h, 2 days, 7 days, 30 days, and 90 days
+- **Qualifies leads** — understands the patient's interest, the procedure, and their payment capacity
+- **Collects patient data** — name, CPF (Brazilian tax ID), email, phone — naturally, in conversation, not as a form
+- **Answers clinical questions** — mamoplastia, lipoaspiração, cruroplastia, rinoplastia, blefaroplastia, abdominoplastia and more — with accurate, non-alarmist information
+- **Escalates intelligently** — when she genuinely doesn't know, she tells the patient she'll check with the doctor, messages Fran directly on WhatsApp, waits for the answer, and returns to the patient
+- **Schedules consultations** — guides patients through the R$ 500 consultation fee, PIX payment, and pre-scheduling with the team
+- **Follows up proactively** — re-engages leads who went silent, at 24h, 2 days, 7 days, 30 days, and 90 days — without ever feeling pushy
 
 ---
 
@@ -29,24 +87,31 @@ VIZZ runs on the clinic's official WhatsApp Business number:
 
 Simply send any message about plastic surgery procedures — she responds in real-time, 24/7.
 
-**Example openers that work:**
+**Example openers:**
 - "Oi, tenho interesse em fazer uma lipo"
-- "Quero saber sobre mamoplastia"
+- "Quero saber sobre mamoplastia de aumento"
 - "Quanto custa uma consulta com o Dr. Mateus?"
-- "Fiz uma lipoaspiração há 2 anos e quero uma revisão"
+- "Tenho uma dúvida sobre cruroplastia"
 
 ---
 
-## The Goal
+## How VIZZ Talks to Fran — The Admin Escalation System
 
-The clinic was managing all patient inquiries manually — a mix of WhatsApp messages, phone calls, and Instagram DMs — with no consistent follow-up and many leads getting lost.
+This is one of VIZZ's most distinctive features, and it emerged from a real operational insight: **Fran already handles the hard questions. VIZZ just needed to know how to ask Fran.**
 
-**VIZZ was built to:**
+When a patient asks something VIZZ isn't certain about:
 
-1. **Never miss a lead** — responds instantly, 24/7, even on weekends
-2. **Qualify before the consultation** — ensures the patient understands the value, the price, and is ready to pay the R$ 500 consultation fee
-3. **Reduce no-shows** — sends reminders and confirms attendance the day before
-4. **Generate academic data** — all conversations feed a Health Economics research project on no-show prediction in elective surgery
+1. VIZZ tells the patient warmly: *"Que boa pergunta — vou confirmar com o Dr. Mateus e já te retorno, não quero te dar uma informação sem ter certeza."*
+2. She sends a structured message to Fran on WhatsApp with the patient's name, phone, and the specific question
+3. When Fran replies, the system links that answer to the specific conversation
+4. VIZZ returns to the patient with the confirmed information, as if she had gone and asked herself
+
+**Fran also uses VIZZ as an admin dashboard** — she can ask VIZZ directly on WhatsApp:
+- "Me dá um resumo das conversas de hoje"
+- "Quem está esperando retorno?"
+- "Me fala sobre a Maria que mandou mensagem ontem"
+
+And VIZZ answers from the full conversation database — all 125+ leads, their current stage, their last message, their pending doubts.
 
 ---
 
@@ -54,44 +119,56 @@ The clinic was managing all patient inquiries manually — a mix of WhatsApp mes
 
 | Metric | Value |
 |--------|-------|
-| Total leads handled | **121+** |
-| Conversations actively tracked | **125 in database** |
+| Conversations tracked in database | **125** |
+| Total leads from Google Sheets | **121** |
 | Follow-up cadence steps | **5 (24h → 2d → 7d → 30d → 90d)** |
 | Response time | **< 3 seconds** |
 | Uptime | **24/7** |
 | Languages supported | **Portuguese, English, Spanish** |
 | Procedures in knowledge base | **12+** |
-
-> The clinic went from losing ~60% of leads due to slow response to having every single inquiry answered within seconds.
+| Development cost | **~$45/month** (Replit Core + Claude Pro) |
+| Salary paid to Ingrid | **R$ 0** |
 
 ---
 
-## The Humanization Approach
+## The Timeline
 
-This was the hardest part. The clinic's specific request: *"She cannot feel like a bot."*
+| Date | Milestone |
+|------|-----------|
+| **November 2024** | Ingrid and Dr. Vizzotto begin designing VIZZ together |
+| **November–January** | Concept development — defining VIZZ's persona, knowledge base, escalation flow |
+| **February 2025** | First live patient conversations — VIZZ tested with real incoming leads |
+| **February–April** | Intensive iteration — teaching humanization, fixing tone, correcting behavior |
+| **April 2025** | VIZZ Admin Mode built — Fran and Dr. Mateus can query VIZZ via WhatsApp |
+| **June 2025** | Emergency stop system, 2h payment confirmation SLA, attendance check at 20h |
+| **Today** | 125 conversations in database, running live 24/7 |
 
-### What makes VIZZ feel human:
+---
 
-**1. She uses your name**
-The moment a patient mentions their name (or she extracts it from context), she uses it naturally throughout the conversation.
+## The Humanization Principles (Learned, Not Programmed)
 
-**2. She admits when she doesn't know**
-Instead of hallucinating, she says:
-> "Que boa pergunta! Vou confirmar com o Dr. Mateus e já te retorno — não quero te dar uma informação sem ter certeza."
+These rules were not written into code on day one. They emerged from watching real conversations fail and asking why.
 
-Then she literally messages the clinic admin on WhatsApp, waits for the answer, and returns to the patient.
+**1. She uses your name — once, naturally**
+Not three times. Not at the start of every message. Once, when it flows. Like a person would.
 
-**3. She respects timing**
-She greets with "Bom dia", "Boa tarde", or "Boa noite" based on the actual time in Brasília.
+**2. She doesn't ask for CPF immediately**
+She builds a conversation first. The data collection happens after trust is established.
 
-**4. She never repeats herself**
-A state machine tracks exactly where each patient is in the conversation — she never re-asks for information she already has.
+**3. She admits uncertainty without abandoning the patient**
+"Não tenho certeza — mas vou verificar" is more trusted than a confident wrong answer.
+
+**4. She reads the time**
+"Bom dia", "Boa tarde", "Boa noite" — based on actual Brasília timezone. No patient receives "Bom dia" at 9pm.
 
 **5. Zero emojis**
-A deliberate design choice. Real consultants at this clinic type without emojis. VIZZ does the same.
+The clinic's real consultants don't use emojis. VIZZ doesn't either. This was a deliberate, enforced rule.
 
-**6. She recognizes foreign patients**
-If the name looks foreign or the patient mentions being abroad, she accepts a passport number instead of CPF and adapts her language.
+**6. She doesn't repeat questions**
+She tracks every piece of information the patient has already shared. She never asks for it again.
+
+**7. She knows when to stop**
+When a patient has clearly lost interest, she doesn't spam follow-ups. The cadence has a maximum of 5 attempts — then silence.
 
 ---
 
@@ -111,7 +188,7 @@ Express.js Backend (Replit)
       │     → asked_valor_ok → awaiting_payment → scheduled
       │
       ├── Claude AI (Anthropic claude-sonnet-4-5)
-      │     Humanized responses with full context injection
+      │     Humanized responses with full patient context
       │
       ├── Admin Escalation
       │     Unknown questions → Fran's WhatsApp → answer → patient
@@ -120,7 +197,7 @@ Express.js Backend (Replit)
       │     All conversations persisted with JSONB messages
       │
       └── Google Sheets
-            Real-time sync of all leads + transcriptions
+            Real-time sync of all leads and transcriptions
 ```
 
 ### Tech Stack
@@ -134,71 +211,8 @@ Express.js Backend (Replit)
 | ORM | Drizzle ORM |
 | WhatsApp | Meta Cloud API (direct, no Twilio) |
 | Frontend | React + Vite + Tailwind + shadcn/ui |
-| Spreadsheet | Google Sheets (via Google Drive connector) |
+| CRM | Custom-built pipeline inside the same system |
 | Deployment | Replit |
-
----
-
-## How VIZZ Escalates Doubts to the Admin
-
-One of VIZZ's most powerful features is her ability to **know what she doesn't know**.
-
-When a patient asks a question outside her training (e.g., "Can I have surgery with lupus?"), VIZZ:
-
-1. Emits a `[VIZZ_DOUBT:question text]` marker in her response
-2. The system detects this and sends a WhatsApp message to Fran (the clinic admin):
-   > "Fran, preciso da sua orientação antes de responder ao lead Maria (+55 51 9xxxx-xxxx). Ela tem uma dúvida que não consigo responder com segurança: 1. Perguntou se pode fazer lipoaspiração com diagnóstico de lúpus. Responda diretamente aqui..."
-3. VIZZ tells the patient she's checking and will return shortly
-4. When Fran replies, the system links the answer back to the specific patient and schedules VIZZ's response
-
-This creates a seamless experience where the patient never knows a human was consulted.
-
----
-
-## The Vibe Coding Story
-
-This entire system was built using **vibe coding** — a development approach where the developer describes what they want in natural language and an AI coding assistant (in this case, Replit Agent + Claude) writes the code.
-
-**What I (the founder) contributed:**
-- The clinical domain knowledge
-- The product decisions ("she should never feel like a bot")
-- The testing and feedback ("this response is too formal")
-- The business logic ("if she doesn't know, ask Fran")
-
-**What Claude contributed:**
-- ~95% of the actual code written
-- Database schema design
-- API integrations (Meta, Google, Anthropic)
-- Error handling and edge cases
-- The entire state machine for patient qualification
-
-**The development environment:**
-- All coding done inside [Replit](https://replit.com) using the AI Agent feature
-- Conversations with the AI agent lasted hours, iterating on behavior
-- The consultant persona was refined through dozens of test conversations
-
-**Total development time:** ~3 months of iterative vibe coding  
-**Total cost:** ~$45/month (Replit Core + Claude Pro)  
-**Lines of code:** ~7,000+ (TypeScript, all AI-generated)
-
----
-
-## Key Technical Challenges Solved
-
-### 1. Neon HTTP Adapter Bug
-The Neon serverless PostgreSQL adapter had a silent bug where `INSERT ... RETURNING *` returned empty rows, and `null` timestamps were serialized as empty strings. Fixed by bypassing the ORM with raw SQL and doing a separate `SELECT` after every `INSERT`.
-
-### 2. Conversation Persistence After Restart
-WhatsApp conversations needed to survive server restarts. Solution: memory cache with PostgreSQL fallback — on every message, the conversation is persisted to DB. On startup, conversations are recovered from DB and from Google Sheets.
-
-### 3. Name Extraction Without Asking Directly
-Patients often introduce themselves mid-sentence ("Oi, sou a Maria, quero saber sobre lipo"). VIZZ extracts names using three layers:
-- Direct extraction from common intro patterns ("me chamo", "sou a", "meu nome é")
-- Mining VIZZ's own response ("Oi, Maria!") to find the name she used
-- Fallback from the scheduling data if the stage machine already captured it
-
-### 4. Multi-Admin Doubt Routing
-When VIZZ escalates a doubt, multiple admins can respond. The system tracks who responded, detects conflicting answers (via Claude), and uses the most authoritative response.
 
 ---
 
@@ -206,44 +220,38 @@ When VIZZ escalates a doubt, multiple admins can respond. The system tracks who 
 
 This project is part of a Health Economics research initiative studying **no-show behavior in elective surgery clinics** in Brazil.
 
-Data collected (with LGPD compliance):
+Data collected (with full LGPD compliance):
 - Lead source (WhatsApp, Instagram, Google, referral, etc.)
 - Time from first contact to consultation scheduled
 - Payment method preference
 - Drop-off stage in the qualification funnel
-- Follow-up response rates
+- Follow-up response rates by cadence step
 
-The goal is to build a **predictive model for no-shows** that clinics can use to optimize their scheduling.
+Goal: a predictive model for no-shows that clinics across Brazil can use.
 
 ---
 
 ## LGPD Compliance (Brazilian Data Protection Law)
 
-- Consent collected before data processing
+- Explicit consent before data processing
 - Right to erasure (soft-delete + anonymization)
-- Audit trail for all data access
-- Data portability (export to Excel/CSV/PDF)
-- No data shared with third parties
+- Full audit trail for all data access
+- Data portability (export to Excel/CSV/PDF/Word)
+- No patient data shared with third parties
+- All data stored in Brazil-region infrastructure
 
 ---
 
-## About the Creator
+## For Researchers and Collaborators
 
-Built by **Dr. Mateus Vizzotto's team** in Porto Alegre, Brazil, as a practical application of AI in healthcare operations.
+VIZZ is a live case study of:
 
-This project demonstrates that with modern AI tools (Replit + Claude), a non-developer with domain expertise can build production-grade software that genuinely helps people — without writing a single line of code manually.
-
----
-
-## Why This Matters for AI Research
-
-VIZZ is a real-world case study of:
-
-1. **AI in healthcare access** — Making specialist consultations more accessible by removing friction from the booking process
-2. **Human-AI collaboration** — The admin escalation system is a model for AI knowing its own limits
-3. **Vibe coding at scale** — A fully deployed production system built without traditional software development
-4. **Behavioral AI** — Training a persona to be warm, consistent, and non-robotic in an emotionally sensitive domain (patients considering surgery)
+- **AI in healthcare access** — removing friction from specialist consultations in a country with significant healthcare inequality
+- **Human-AI collaboration** — the admin escalation system is a working model of AI knowing its own limits and routing to humans appropriately
+- **Persona training without fine-tuning** — VIZZ's humanization was achieved entirely through prompt engineering and iterative behavioral feedback, with no model training
+- **Vibe coding in production** — a fully deployed, real-patient-facing system built without a single line of manually written code
 
 ---
 
-*For questions or collaboration: contact via GitHub Issues*
+*Vizzotto Cirurgia Plástica — Rio Grande do Sul, Brazil*
+*For questions: open a GitHub Issue or contact via the repository*

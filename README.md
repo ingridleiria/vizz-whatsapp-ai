@@ -34,7 +34,7 @@ They named her **Vizz**.
 
 **Fran** — Clinic administrative coordinator. The operational brain of the clinic. Became VIZZ's escalation partner — when VIZZ doesn't know something, she asks Fran. Fran's responses shaped VIZZ's knowledge base in real-time.
 
-**Ingrid Leiria** — Developer, product designer, trainer. Wrote zero lines of code manually. Built the entire system through vibe coding with Replit Agent and Claude. Spends hours iterating on VIZZ's responses, catching when she sounds robotic, and pushing her toward something more human. **This is unpaid work** — Ingrid does this because she believes AI can genuinely improve healthcare access in Brazil.
+**[Ingrid Leiria](https://kr.linkedin.com/in/ingrid-leiria-25b4767a)** — Chief of Staff and AI enablement advocate, currently based in South Korea pursuing a PhD in Economics (Applied Microeconometrics). Wrote zero lines of code manually. Built the entire system through vibe coding with Replit Agent and Claude. Spends hours iterating on VIZZ's responses, catching when she sounds robotic, and pushing her toward something more human. **This is unpaid work** — Ingrid does this because she believes AI can genuinely improve healthcare access in Brazil.
 
 ---
 

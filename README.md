@@ -76,7 +76,7 @@ I am open to conversations about:
 - **The safety design specifically**, if you work on escalation and confidence calibration for assistants that
   operate in regulated settings.
 
-Write to **ingridleiria@gmail.com**.
+Write to **ingrid@leiriaconsulting.com**.
 
 ## About
 

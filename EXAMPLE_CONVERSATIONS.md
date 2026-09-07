@@ -113,4 +113,4 @@ Everything else in these six scenes is voice work, which is unglamorous, iterati
 conversations every week and removing one machine tell at a time.
 
 If you are building something in this space, the part of this worth copying is the shape of scene two, tuned
-against your own clinician's judgment rather than mine. Write to **ingridleiria@gmail.com**.
+against your own clinician's judgment rather than mine. Write to **ingrid@leiriaconsulting.com**.

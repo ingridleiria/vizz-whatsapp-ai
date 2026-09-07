@@ -206,4 +206,4 @@ The caution that belongs next to that sentence is the entire reason the boundary
 building does not lower the cost of being wrong, and in a clinical setting the second number is the one that
 matters.
 
-If you want to talk about any of it, write to **ingridleiria@gmail.com**.
+If you want to talk about any of it, write to **ingrid@leiriaconsulting.com**.

@@ -56,7 +56,7 @@ side project usually stops.
   about the software.
 - **Research collaboration** on patient communication patterns and AI triage in small practices.
 
-Write to **ingridleiria@gmail.com**, or open an issue here.
+Write to **ingrid@leiriaconsulting.com**, or open an issue here.
 
 More of my work is at [ingridleiria.github.io](https://ingridleiria.github.io), and I write about this kind of
 building at [BreakTalk](https://breaktalk.substack.com).

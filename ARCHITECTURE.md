@@ -5,7 +5,7 @@ written for someone deciding whether to build something similar rather than for 
 prompt architecture, the classification rules, the confidence thresholds, the clinic knowledge base and the data
 model are not published, for the reasons given in the [README](README.md).
 
-If you want the level below this one, write to **ingridleiria@gmail.com** and say what you are building.
+If you want the level below this one, write to **ingrid@leiriaconsulting.com** and say what you are building.
 
 ---
 

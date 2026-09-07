@@ -84,6 +84,16 @@ Built by [Ingrid Leiria](https://ingridleiria.github.io) with a physician collab
 real operational problem rather than a demonstration. I write about this kind of work at
 [BreakTalk](https://breaktalk.substack.com).
 
+## Read more
+
+- **[Architecture](ARCHITECTURE.md)** on the shape of the system and why the safety boundary is a layer of its own
+  rather than a paragraph in a prompt.
+- **[Illustrated behaviour](EXAMPLE_CONVERSATIONS.md)** on what it does at the six moments that decide whether a
+  patient trusts it, written to show behaviour rather than transcribed from the clinic.
+- **[How this was built](VIBE_CODING_STORY.md)** on putting a production system into a regulated setting without an
+  engineering team, and what that method really requires.
+- **[About](ABOUT.md)** on who built it, what I actually do on it week to week, and why it is unpaid.
+
 ## Licence
 
 Copyright 2026 Ingrid Leiria. All rights reserved. See [LICENSE](LICENSE).

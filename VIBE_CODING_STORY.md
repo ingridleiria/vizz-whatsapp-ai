@@ -1,224 +1,209 @@
-# The Vibe Coding Story Behind VIZZ
+# How this was built
 
-*How a health economist and a plastic surgeon built a production AI system — without a developer, without a salary, and without writing a single line of code*
-
----
-
-## The Search That Started Everything
-
-In 2024, Dr. Mateus Vizzotto was losing patients he never got to meet.
-
-Not in surgery. Before that. In the gap between "a person sends a WhatsApp message at 10pm" and "a person shows up for a consultation."
-
-That gap — filled with missed follow-ups, slow responses, inconsistent information, and no-shows — was costing the clinic patients, revenue, and the ability to help people who genuinely needed surgery.
-
-Dr. Vizzotto started looking for an AI solution. This was not a casual search. He tested everything available for medical clinics in Brazil:
-
-- Pre-built WhatsApp chatbots
-- CRM automation tools with AI integrations
-- Generic AI assistants configured for healthcare
-- Brazilian healthtech platforms
-
-**He couldn't find what he was looking for.**
-
-Every solution had the same problem: it felt like a machine. Patients would engage for one or two messages, sense the script, and stop responding. Or worse — they'd keep interacting but feel like they were filling out a form, not talking to someone at the clinic.
-
-The word he kept using was: **"desumanizado."** Dehumanized.
-
-Plastic surgery patients are not looking for a product. They are considering changing something about their bodies — often something they've been self-conscious about for years. The moment they feel like they're talking to software, the trust collapses.
+*An economist and a surgeon built a production assistant without hiring a developer. This is what that actually
+took, including the parts that make it sound less magical than the phrase suggests.*
 
 ---
 
-## November 2024 — The Idea
+## The search that came first
 
-Dr. Vizzotto shared this frustration with Ingrid Leiria, a health economist who had been working on clinic operations and research.
+Before any of this was software, it was a physician trying to buy a solution and failing.
 
-Their conversation wasn't technical. It was about what the right experience should *feel like* for a patient who messaged the clinic for the first time.
+He was losing patients he never met. Not in surgery, before it, in the gap between someone sending a message at ten
+at night and someone walking into a consultation. That gap is filled with slow replies, inconsistent information
+and messages that quietly go unanswered, and it costs a small practice more than any line item you could point at.
 
-- She should feel heard
-- She should get real information about the procedures, not just "book a consultation"
-- She should be guided, not interrogated
-- If she asked something the AI didn't know, the AI should say so — and actually go find out
-- She should never feel like she was talking to a bot
+So he went looking. Pre built chatbots for messaging apps. CRM tools with an AI layer bolted on. General assistants
+configured for healthcare. The local healthtech platforms. He tested all of it.
 
-By the end of that conversation, they had the concept: not a chatbot, but a consultant. A person with a name, a personality, a knowledge base built from the clinic's real experience.
+Everything had the same failure, and it was not a language quality problem. Patients would engage for one or two
+messages, sense the script, and stop. Or worse, keep going while clearly feeling they were filling in a form rather
+than talking to the practice.
 
-They called her **Vizz** — a variation on Vizzotto.
+The word he kept using was desumanizado. Dehumanised.
 
----
-
-## What Ingrid Contributed vs. What the Clinic Contributed
-
-This is important to understand, because it's a genuine collaboration — not a developer building something for a client.
-
-**Ingrid contributed:**
-- All technical development — via vibe coding with Replit Agent and Claude
-- Product decisions — what features to build, in what order
-- Testing — sending messages to VIZZ herself, identifying what felt wrong
-- Iteration — translating "this response feels robotic" into specific instructions that changed the behavior
-- Architecture — designing how all the pieces connect (database, WhatsApp API, escalation system, CRM)
-- This is unpaid work. Ingrid does it because she believes in the project.
-
-**The clinic contributed:**
-- Clinical knowledge — what procedures exist, what patients typically ask, what the real answers are
-- Process design — how consultations are scheduled, how payments work, what Fran's role is
-- Feedback — "this is not how we talk to patients," "this phrasing is too formal," "a patient from the interior of RS would say it this way"
-- Patient interaction history — the real conversations that trained VIZZ's intuitions
-
-**Neither side could have built this alone.**
-
-Ingrid could not have known the clinical nuances. Dr. Vizzotto and Fran could not have built the software. The collaboration is the product.
+That word is the origin of everything that follows, because it names a problem that cannot be fixed by a better
+model. It has to be fixed by someone willing to read hundreds of conversations and remove one machine tell at a
+time.
 
 ---
 
-## February 2025 — First Real Patients
+## What was actually agreed, in a conversation with no technology in it
 
-In February 2025, VIZZ went live with real incoming leads.
+The first design session was not about architecture. It was about what the right experience should feel like for
+someone messaging a surgical practice for the first time.
 
-The first conversations were exciting and humbling. VIZZ worked — she responded instantly, collected information, answered basic questions. But watching real patients interact with her revealed problems no amount of planning could have anticipated.
+What came out of it was a short list that never changed:
 
-**Problem 1: She asked for CPF too early.**
-A patient would say "Oi, tenho interesse em cirurgia" and within two messages VIZZ was asking for their tax ID number. Patients would stop responding. They hadn't even decided if they trusted the clinic yet.
+- She should feel heard before she is asked for anything
+- She should get real information, not a redirect to book a consultation
+- She should be guided rather than interrogated
+- If the assistant does not know something, it should say so and then go and find out
+- She should never be uncertain about whether she is talking to a person
 
-*Fix: restructure the qualification flow so CPF only comes after the patient has expressed clear intent and received real information.*
-
-**Problem 2: She was too formal.**
-VIZZ used "olá" and full formal constructions. In Rio Grande do Sul, people don't talk like that. It felt like a bank.
-
-*Fix: rewrite the persona instructions with explicit regional tone guidance. "Oi" not "Olá." Contractions. Shorter sentences.*
-
-**Problem 3: She repeated information patients had already given.**
-A patient mentioned her name in the third message. Six messages later, VIZZ asked: "Como posso te chamar?"
-
-*Fix: improve name extraction logic to catch all intro patterns ("sou a Maria", "me chamo Maria", "meu nome é Maria") and mine VIZZ's own previous responses.*
-
-**Problem 4: She hallucinated when she didn't know.**
-A patient asked about a contraindication with a specific medication. VIZZ answered confidently — with information that wasn't accurate.
-
-*Fix: build the escalation system. If VIZZ is uncertain, she doesn't answer. She tells the patient she's verifying with the doctor, she messages Fran, and she waits.*
+Read that list again and notice that four of the five are constraints on behaviour, not features. That ratio held
+for the entire project.
 
 ---
 
-## How VIZZ Was Humanized — The Real Iterations
+## Who contributed what
 
-The humanization of VIZZ was not a feature that was added. It was a practice that was sustained over months.
+This is a collaboration, not a vendor relationship, and the division is worth stating precisely.
 
-Every week, Ingrid would read through real conversations. She would find the moments where VIZZ felt robotic, formal, or misaligned with how the clinic actually communicates.
+**I contributed** the technical build, done through AI tools under close supervision; the product decisions about
+what to build and in what order; the testing, which mostly means using the thing myself and noticing what felt
+wrong; the iteration that turns "this response is off" into an instruction specific enough to change behaviour;
+and the system design, including the escalation architecture that is the reason the project is defensible at all.
+This is unpaid work, for reasons set out in [ABOUT.md](ABOUT.md).
 
-Then she would translate those observations into instructions — sometimes very specific ones:
+**The practice contributed** the clinical knowledge, which is not a detail: what patients really ask, what the
+honest answers are, where the line sits between orientation and medical advice. The process design. The feedback,
+in the form of "we do not talk to patients like that" and "someone from here would phrase it this way." And the
+history of real patient interaction that the assistant's instincts were built from.
 
-> "She said 'Entendido!' at the start of a response. Real people don't say that. It sounds like a customer service script. Remove that pattern entirely."
-
-> "She listed three questions in numbered format. It felt like a form. She should ask one thing at a time, conversationally."
-
-> "She said 'Fico à disposição para qualquer dúvida.' That's a closing line from a formal email. Remove it from WhatsApp responses."
-
-> "She correctly identified the patient's procedure but then described it using clinical terminology. The patient asked about 'a cirurgia da barriga.' VIZZ should use the patient's language, not the textbook term."
-
-> "This patient shared that she had been wanting this surgery for five years and was finally ready. VIZZ acknowledged it with one sentence and moved on to collecting data. She should have paused there. Acknowledged what that means. Then moved on."
-
-Each of these observations went into the system prompt. Over months, the accumulated set of constraints and behaviors became VIZZ's personality.
+Neither side could have done this alone, and I do not think that is a modest thing to say. I could not have known
+the clinical nuance. They could not have built the system. The collaboration is the product.
 
 ---
 
-## The Escalation to Fran — A System Born From Reality
+## What real patients broke, immediately
 
-The most important design decision in VIZZ was also the simplest: **let her ask for help.**
+Going live is where planning stops being useful. Four problems surfaced in the first weeks, none of which had come
+up in testing.
 
-In the early versions, VIZZ would try to answer everything. This led to confident wrong answers — the worst possible outcome in a medical context.
+**It asked for a sensitive identifier far too early.** Someone would say they were interested, and within two
+messages the assistant wanted formal identification. They stopped replying. They had not decided whether they
+trusted the practice yet, and the request was not unreasonable so much as unearned. The fix was to restructure the
+whole sequence around when trust exists rather than around when the data is convenient to collect.
 
-The fix came from watching how Fran actually works. When a patient asks something Fran isn't sure about, she walks down the hall and asks Dr. Mateus. Or she messages him. She doesn't pretend to know. She goes and finds out.
+**It was too formal.** Full formal constructions, the greeting a bank uses. In that part of Brazil nobody speaks
+like that, and the effect was to make a surgical practice sound like a call centre. The fix was explicit regional
+tone guidance, which is a polite way of saying I wrote down dozens of specific phrasings and banned them by name.
 
-VIZZ needed the same capability.
+**It forgot things it had been told.** A patient gave her name in the third message and was asked for it again six
+messages later. Nothing destroys the illusion faster, and fixing it properly meant handling every way a person
+might introduce themselves, most of which do not look like introductions.
 
-The system that was built:
-
-1. When VIZZ is uncertain about something medical, her response to the patient includes a hidden marker: `[VIZZ_DOUBT: the specific question she's unsure about]`
-2. The backend detects this marker, strips it from the patient-facing message
-3. It sends a structured message to Fran's WhatsApp number with the patient's name, phone, and the question
-4. Fran answers in plain language
-5. The system links Fran's answer to the specific conversation and schedules VIZZ's follow-up
-
-From the patient's perspective: VIZZ said she'd check with the doctor. A few minutes later, she came back with the answer. It feels completely natural.
-
-From Fran's perspective: she gets a clear, structured message with the context she needs to answer quickly. It takes her 30 seconds.
-
----
-
-## The Admin Mode — VIZZ Becomes Fran's Assistant
-
-As VIZZ accumulated conversations, a new need emerged: Fran needed visibility into what was happening.
-
-Instead of building a dashboard (which would require Fran to log into a web interface she didn't want to use), the team built **VIZZ Admin Mode** — a special mode that activates when Fran, Dr. Mateus, or Ingrid message VIZZ from their own WhatsApp numbers.
-
-In admin mode, VIZZ becomes a management assistant. Fran can ask:
-
-- "Me dá um resumo das conversas de hoje"
-- "Quem está esperando meu retorno?"
-- "Me fala sobre a paciente que perguntou sobre mamoplastia ontem"
-- "Vizz, pause os atendimentos hoje à tarde"
-
-And VIZZ answers from the live database — all conversations, their current stages, pending doubts, scheduled appointments.
-
-This was not planned from the start. It emerged from a practical need: Fran wanted to know what was happening without learning a new tool. She already knew WhatsApp.
+**It answered a question it should not have answered.** Someone asked about an interaction with a medication and
+got a confident, wrong reply. This is the failure that produced the escalation system, and it is the reason the
+whole architecture is organised around a boundary rather than around answers.
 
 ---
 
-## What Vibe Coding Actually Means in Practice
+## Humanisation is a practice, not a feature
 
-Vibe coding is often described as "tell the AI what to build." That's technically accurate but misses what makes it hard.
+There was never a version where humanisation was added. There was a weekly habit that never stopped.
 
-**The hard part of vibe coding is not the code. It's the specification.**
+Every week I read real conversations and find the moments where it sounded like software. Then I translate the
+observation into something specific enough to act on. The instructions look like this:
 
-To tell an AI to build something well, you have to understand what "well" means with precision. You have to catch when the AI misunderstood your intent. You have to hold a clear mental model of the system even when you can't read the code.
+> It opened with an acknowledgement token before answering. Real people do not do that. It reads as a support
+> script. Remove that pattern completely.
 
-Ingrid describes her role as being a "ruthless product manager for the AI." The AI (Replit Agent + Claude) writes everything. Ingrid approves nothing that isn't right.
+> It listed three questions in a numbered format. That is a form. Ask one thing at a time, the way a conversation
+> works.
 
-**Examples of interactions that shaped VIZZ:**
+> It closed with a formal sign off borrowed from email. Nobody writes that in a messaging app. Remove it.
 
-*"The database is not saving conversations correctly — 121 patients talked to VIZZ but only 6 are in the database. Something is wrong."*
-→ The agent diagnosed a silent bug in the Neon PostgreSQL HTTP adapter (`INSERT ... RETURNING *` returning empty arrays), rewrote the persistence layer with raw SQL.
+> It identified the procedure correctly and then described it in clinical vocabulary. The patient used her own
+> words for it. Use hers.
 
-*"She's losing the patient's name when the CRM already has a record for them. Fix it."*
-→ The agent found a condition that skipped name extraction when a CRM record existed. One-line logic fix. But Ingrid caught it by watching real conversations.
+> This patient mentioned she had wanted this for five years and had finally decided. The reply acknowledged it in
+> one clause and moved on to collecting information. It should have stopped there for a moment. That was the whole
+> message.
 
-*"VIZZ needs to know when she's talking to Fran vs. a patient, and behave completely differently."*
-→ The agent built the full admin mode system — phone number whitelist, separate conversation history, admin-specific system prompt, summary generation from DB.
-
-Each of these started not with technical specification but with a behavioral observation. The translation from "this feels wrong" to "this is the code that fixes it" was the AI's job. Noticing that something felt wrong was Ingrid's.
-
----
-
-## The Numbers
-
-| Metric | Value |
-|--------|-------|
-| Project start | November 2024 |
-| First live patient | February 2025 |
-| Conversations in DB | 125 |
-| Development cost | ~$45/month (Replit Core + Claude Pro) |
-| Lines of code | ~7,000+ TypeScript |
-| Lines written by hand | 0 |
-| Developers employed | 0 |
-| Salary paid | R$ 0 |
-| Hours of iteration | Hundreds |
+Months of those accumulate into a personality. There is no shortcut, and there is no model release that does this
+for you, because the raw material is your own clinic's conversations and nobody else has them.
 
 ---
 
-## Why This Matters
+## The escalation, which came from watching a person work
 
-VIZZ is not a demo. She is not a prototype. She is not a pilot program. She is a production system that has handled over 125 real patient conversations, in Portuguese, about real medical procedures, with real money at stake.
+The most important decision in the system is also the least clever: let it ask for help.
 
-She was built by someone with domain expertise and no programming background, using AI tools that are available to anyone today.
+Early versions tried to answer everything, which produced confident wrong answers, which is the worst available
+outcome in a clinical setting. The fix came from watching how the practice coordinator actually works. When someone
+asks her something she is not sure about, she does not improvise. She goes and asks the surgeon, then comes back.
 
-This is the shift that is happening: **expertise is becoming executable.**
+The assistant needed the same move. The mechanism is described at the level worth publishing in
+[ARCHITECTURE.md](ARCHITECTURE.md), and the important part is not mechanical anyway. It is that from the patient's
+side there is no visible handover, no ticket, no notice that the software has given up. The assistant says it is
+confirming, and then it comes back with the answer. From the practice's side, an escalation is a short structured
+question that takes half a minute to answer, on the channel they already use.
 
-The plastic surgeon who understands what patients need, the clinic coordinator who knows how the process works, the health economist who understands the data — they can now build the software that reflects their knowledge. Without intermediaries. Without translation loss. Without waiting for a developer to understand what they need.
-
-VIZZ is early evidence of what that world looks like.
+Once you stop treating handovers as failures to be minimised and start treating them as the thing the practice is
+paying for, most of the design tension disappears.
 
 ---
 
-*Ingrid Leiria — Health Economist, vibe coder, VIZZ's creator*
-*Dr. Mateus Vizzotto — Plastic surgeon, Vizzotto Cirurgia Plástica, Rio Grande do Sul, Brazil*
-*Fran — Clinic coordinator, VIZZ's operational partner*
+## What the practice got that nobody planned
+
+As conversations accumulated, the coordinator needed visibility. The obvious answer was a dashboard, and the
+obvious answer was wrong, because it would have meant asking someone who is busy all day to learn a new tool and
+log into it.
+
+So the assistant learned to talk to the practice too. Staff can ask it what happened today, who is waiting on a
+reply, and what a particular conversation was about, in the same app, in plain language, and get an answer from
+live data. Access is restricted to the practice, and the details of how are not published.
+
+That feature was never on a roadmap. It came from a practical need, which is where most of the good ones came from.
+
+---
+
+## What vibe coding actually requires
+
+The phrase makes it sound like you describe a thing and receive it. The description part is accurate. The
+receiving part is not.
+
+The hard part is not the code. It is the specification, and the taste to reject what comes back.
+
+To get an AI to build something well you have to know what well means with enough precision to recognise its
+absence. You have to notice when your intent was misread, which is harder when you cannot read the code, and it
+means holding a clear model of the system in your head by other means. My own description of the role is ruthless
+product manager. The tools write everything. I approve nothing that is not right.
+
+Three examples of what an instruction looks like in practice:
+
+*"A hundred and twenty one people have talked to this and six of them are in the database. Something is silently
+failing on the write path."*
+
+*"It loses the patient's name when a record already exists for them. Find the condition that skips extraction."*
+
+*"It needs to know when it is talking to the practice rather than to a patient, and behave completely differently."*
+
+Each of those starts as an observation, not a technical specification. Turning them into code was the tool's job.
+Noticing was mine, and noticing is the part that does not automate.
+
+---
+
+## The numbers
+
+| | |
+|---|---|
+| Concept | Late 2024 |
+| First live patient | Early 2025 |
+| Real patient conversations handled | More than a hundred |
+| Running cost during development | Around forty five dollars a month in tooling |
+| Approximate size | Several thousand lines |
+| Lines written by hand | None |
+| Developers employed | None |
+| Weeks of reading conversations | Ongoing |
+
+---
+
+## Why any of this matters
+
+This is not a demo, a prototype or a pilot. It is a system in production that has handled real patient
+conversations, in Portuguese, about real procedures, with real consequences attached, in a regulated setting.
+
+It was built by someone whose training is in economics, using tools available to anyone reading this.
+
+That is the shift worth paying attention to. Expertise is becoming executable. The surgeon who knows what patients
+need, the coordinator who knows how the process actually runs, the economist who knows what the data is for: they
+can now build the thing that encodes what they know, without it being translated by someone who does not know it.
+
+The caution that belongs next to that sentence is the entire reason the boundary layer exists. Lowering the cost of
+building does not lower the cost of being wrong, and in a clinical setting the second number is the one that
+matters.
+
+If you want to talk about any of it, write to **ingridleiria@gmail.com**.

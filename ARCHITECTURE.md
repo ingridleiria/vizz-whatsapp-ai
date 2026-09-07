@@ -1,499 +1,133 @@
-# VIZZ — Full Technical Architecture
+# Architecture
 
-## System Map
+This is not a build guide. It is the shape of the system and the reasoning behind the parts that were difficult,
+written for someone deciding whether to build something similar rather than for someone reproducing this one. The
+prompt architecture, the classification rules, the confidence thresholds, the clinic knowledge base and the data
+model are not published, for the reasons given in the [README](README.md).
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                         VIZZ Ecosystem                                   │
-│                                                                          │
-│   Patient (WhatsApp)                                                     │
-│        │                                                                 │
-│        ▼                                                                 │
-│   Meta Cloud API  ──HMAC-SHA256──►  POST /api/webhooks/whatsapp          │
-│        │                                     │                           │
-│        │              ┌──────────────────────┤                           │
-│        │              ▼                      ▼                           │
-│        │        isAdminPhone?           Patient Flow                     │
-│        │            │                       │                            │
-│        │            ▼                       ▼                            │
-│        │      Admin Mode              Stage Machine                      │
-│        │   (Fran / Dr. Mateus)    (rule-based + AI)                     │
-│        │            │                       │                            │
-│        │            └──────────┬────────────┘                            │
-│        │                       ▼                                         │
-│        │              Claude AI (Anthropic)                              │
-│        │              claude-sonnet-4-5  ◄──── System Prompt             │
-│        │              claude-haiku-4-5        (3,000+ tokens)            │
-│        │                       │                                         │
-│        │              ┌────────┴─────────┐                              │
-│        │              ▼                  ▼                               │
-│        │         PostgreSQL         Google Sheets                        │
-│        │       (Neon serverless)   (Lead tracking)                       │
-│        │              │                                                  │
-│        │    ┌─────────┴──────────┐                                      │
-│        │    │                    │                                       │
-│        │  Audio               Doubts                                     │
-│        │  (voice msg)        escalated                                   │
-│        │    │                    │                                       │
-│        │    ▼                    ▼                                       │
-│   Groq Whisper /          Fran's WhatsApp                               │
-│   Gemini Flash           (+55 51 99520-0513)                             │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+If you want the level below this one, write to **ingridleiria@gmail.com** and say what you are building.
 
 ---
 
-## AI Models Used
+## Five layers, and why they are separate
 
-VIZZ uses three different Anthropic Claude models depending on the task — chosen for the right balance of quality vs. latency vs. cost:
+**The channel.** Messages arrive from the official business messaging API and go back out through it. Everything
+here is plumbing: verifying that a delivery really came from the platform, acknowledging fast enough that the
+platform does not retry, and handling the fact that a single human thought often arrives as four messages in nine
+seconds. That last point is not plumbing at all, and it is covered below.
 
-| Model | Used For | Max Tokens | Temperature |
-|-------|----------|-----------|-------------|
-| **claude-sonnet-4-5** | Main patient responses, admin mode, 2h conversation review, morning briefing, Fran doubt analysis | 1,000–1,500 | 0.8 |
-| **claude-haiku-4-5** | Stage detection, name extraction, intent classification, quick admin summaries | 50–500 | 0–0.4 |
-| **claude-opus-4-5** | WhatsApp group message analysis (higher complexity reasoning) | 800 | — |
+**Conversation state.** Every patient has a running record: what has been asked, what has been answered, what stage
+of the process they are at, what the practice has already told them. Without it the assistant is a very fluent
+goldfish, and patients notice within three exchanges.
 
-### Why three models?
+**Reasoning.** Generation happens here, in the practice's own voice, constrained by a knowledge base the practice
+owns and can correct. This is the layer most people think is the product. It is the least interesting one.
 
-Every WhatsApp message triggers at minimum:
-1. A stage classification call (haiku — fast, cheap, deterministic)
-2. A response generation call (sonnet — quality, contextual)
+**The boundary.** A separate stage that decides whether the answer that was just written is allowed to be sent at
+all. It runs after generation and it can veto. This is the product.
 
-Using Haiku for classification reduces latency and cost significantly. Sonnet handles everything that touches the patient directly. Opus is reserved for the most complex reasoning tasks.
+**The practice.** Where a human sees what is happening, answers what the assistant could not, and takes over a
+conversation whenever they want to. Not a dashboard nobody logs into, which is the mistake that kills most of these
+systems. It lives on the channel the practice already uses all day.
 
----
-
-## Audio Transcription Pipeline
-
-When a patient sends a voice message:
-
-```
-Patient sends audio (OGG/Opus from WhatsApp)
-        │
-        ▼
-Download binary from Meta CDN
-        │
-        ▼
-Try Groq Whisper (primary)
-  Model: whisper-large-v3-turbo
-  API: https://api.groq.com/openai/v1/audio/transcriptions
-  No fixed language → auto-detects PT / EN / ES
-        │
-        ├── Success → transcript text → VIZZ response
-        │
-        └── Fail or no GROQ_API_KEY
-              │
-              ▼
-        Gemini 1.5 Flash (fallback)
-          API: https://generativelanguage.googleapis.com
-          Inline base64 audio + prompt
-              │
-              ▼
-        Gemini 2.0 Flash (media processing)
-          Used for images and documents → description text
-```
+The layers are separate because the failure modes are separate. A generation problem produces an awkward sentence.
+A boundary problem produces a confident wrong answer about a medical question, sent to a real person, at eleven at
+night, with the clinic's name on it. Those two things should not share a code path, and they should not share an
+owner.
 
 ---
 
-## External APIs & Services
+## Why the boundary is its own layer
 
-| Service | Purpose | API / SDK |
-|---------|---------|-----------|
-| **Anthropic Claude** | All AI responses | Anthropic Node.js SDK via Replit AI Integration |
-| **Meta WhatsApp Cloud API** | Send/receive WhatsApp messages | REST — `graph.facebook.com/v18.0/` |
-| **Groq** | Audio transcription (Whisper) | REST — `api.groq.com/openai/v1/audio/transcriptions` |
-| **Google Gemini** | Audio fallback + image/doc description | `@google/generative-ai` SDK |
-| **Neon** | PostgreSQL serverless database | `@neondatabase/serverless` driver |
-| **Google Drive** | Patient file storage, Sheets lead tracking | Replit Google Drive Connector (OAuth) |
-| **Resend** | Transactional email (lead notifications) | REST — `api.resend.com` |
-| **Read.ai** | Meeting transcription webhook receiver | Webhook `POST /api/webhooks/readai` |
-| **GitHub** | This repository | Replit GitHub Connector (OAuth) |
+The instinct is to fold safety into the prompt: tell the model not to answer medical questions and move on. It
+works most of the time, which is exactly the problem, because a safety property that holds most of the time is not
+a safety property, it is a statistic.
 
-### Meta WhatsApp Cloud API — Key Endpoints Used
+Three things go wrong when the boundary lives only in the prompt. The model can be talked out of it by a patient
+who reframes the question. The model can be confident and wrong at the same time, which is the state in which its
+own self assessment is least reliable. And there is no record: when the boundary is a paragraph of instructions,
+nobody can answer the question of how often it held, because holding leaves no trace.
 
-```
-POST  graph.facebook.com/v18.0/{phone_number_id}/messages   ← send message
-GET   graph.facebook.com/v18.0/{media_id}                    ← get media URL
-GET   {media_url}                                             ← download binary
+Making it a distinct stage buys three things. It can be evaluated on its own against real conversations, so the
+question of whether it works has an answer. It can be tuned without touching how the assistant sounds. And it
+produces a log, which is what turns "we think it escalates appropriately" into a number the practice can look at.
 
-Inbound webhook: GET/POST /api/webhooks/whatsapp
-  Verification: HMAC-SHA256 of raw body with WHATSAPP_APP_SECRET
-  Message types handled: text, image, video, document, audio, voice, sticker
-```
+The threshold sits deliberately low. It escalates more often than it strictly needs to. An unnecessary handover
+costs a person thirty seconds. The other kind of error costs something that cannot be priced.
 
 ---
 
-## Background Scanners (Always Running)
+## What state has to persist, and what it buys
 
-These are Node.js `setInterval` timers that run continuously on the server — no cron, no external job queue:
+Four things are worth the storage.
 
-| Scanner | Interval | What It Does |
-|---------|----------|-------------|
-| **Conversation stage sync** | 9 min | Syncs all WhatsApp conversation stages to CRM patients table |
-| **Pending follow-up check** | 2 min | Processes any follow-ups that are due right now (sub-cadence trigger) |
-| **Lead follow-up scanner** | 15 min | Main cadence scanner: finds leads past their silence threshold and sends follow-up messages |
-| **Proactive review (Claude)** | 2 h | Claude analyses conversations where the patient sent the last message 2–4h ago and decides contextually if VIZZ should re-engage |
-| **Fran confirmation reminder** | 30 min | If Fran hasn't confirmed a payment in 2h, sends her a reminder |
-| **Consultation attendance check** | 30 min | At 20h Brasília time, asks Fran if scheduled patients attended their consultation |
-| **Google Sheets sync** | 5 min | Pushes new conversations and learnings to the tracking spreadsheet |
+**Identity.** The patient's name, once given, and never asked for twice. Asking a second time is the single fastest
+way to tell someone they are talking to a machine, and it is entirely avoidable. Extracting a name reliably from
+natural speech turned out to be harder than expected, because people introduce themselves in more ways than you
+would guess and half of them do not look like introductions.
 
-### Morning Briefing (7:30–10:00 Brasília)
+**Stage.** Where the conversation is in the process, which is what stops the assistant from asking for information
+the person has no reason to give yet. Sequencing is a trust question, not a data question. Ask for something
+sensitive in the second message and the conversation ends, not because the request was unreasonable but because it
+was unearned.
 
-On server startup, if the local time is between 07:30 and 10:00 Brasília:
-- `runMorningPipelineReview()` runs immediately
-- Generates a full pipeline summary and sends it to Fran's WhatsApp
-- Includes: active leads, pending doubts, today's scheduled consultations, follow-up queue
+**Open questions.** Anything escalated and not yet answered, so a reply from the practice can be routed back to the
+right conversation, hours later, in the right tone, without the patient having to repeat themselves.
 
----
-
-## API Endpoint Reference
-
-The system exposes **178 REST endpoints**. Key groups:
-
-### Authentication
-```
-POST   /api/auth/login
-POST   /api/auth/logout
-GET    /api/auth/me
-POST   /api/admin/reset-password
-```
-
-### WhatsApp / VIZZ
-```
-GET    /api/webhooks/whatsapp              ← Meta webhook verification
-POST   /api/webhooks/whatsapp              ← inbound messages (main entry point)
-GET    /api/whatsapp/conversations         ← list all conversations
-GET    /api/whatsapp/real-conversations    ← real patient convs from DB (read-only view)
-GET    /api/whatsapp/conversation/:phone   ← single conversation by phone
-DELETE /api/whatsapp/conversation/:phone
-POST   /api/whatsapp/send                 ← manual message send
-POST   /api/whatsapp/scan-leads           ← manually trigger follow-up scanner
-GET    /api/admin/vizz-history/:phone     ← full conversation transcript
-GET    /api/admin/vizz-training           ← VIZZ learnings list
-GET    /api/admin/whatsapp-token-status   ← token validation (checked on startup)
-GET    /api/admin/briefing-preview        ← preview morning briefing without sending
-```
-
-### Patients (CRM / Patient 360)
-```
-GET    /api/patients                       ← list with search (name, CPF, phone)
-GET    /api/patients/:id
-POST   /api/patients
-PUT    /api/patients/:id
-DELETE /api/patients/:id
-GET    /api/patients/export/excel
-GET    /api/patients/export/csv
-GET    /api/patients/export/pdf
-GET    /api/patients/export/word
-GET    /api/patients/:id/interactions
-GET    /api/patients/:id/files
-GET    /api/patients/:id/tasks
-GET    /api/patients/:id/transcripts
-GET    /api/patients/:id/drive-files
-GET    /api/patients/:id/communications
-GET    /api/patients/:id/consents
-GET    /api/patients/:id/access-history
-GET    /api/patients/:id/export           ← LGPD data portability
-```
-
-### Appointments
-```
-GET    /api/appointments
-POST   /api/appointments
-GET    /api/appointments/:id
-PUT    /api/appointments/:id
-DELETE /api/appointments/:id
-GET    /api/analytics/no-show             ← no-show analytics for research
-GET    /api/patients/:id/appointments
-```
-
-### AI Chat (Internal)
-```
-POST   /api/ai/chat                        ← internal AI chat with patient context
-GET    /api/ai/conversations
-GET    /api/ai/conversations/:id
-DELETE /api/ai/conversations/:id
-```
-
-### Google Drive
-```
-GET    /api/drive/folders
-GET    /api/drive/files
-GET    /api/drive/search
-GET    /api/drive/recent
-GET    /api/drive/status
-GET    /api/drive/root-url
-GET    /api/drive/administrativo
-GET    /api/drive/marketing
-GET    /api/drive/processos
-```
-
-### Finance & Research
-```
-GET    /api/finance/transactions
-GET    /api/finance/accounts
-GET    /api/finance/dre-summary
-GET    /api/finance/dre-trends
-GET    /api/finance/snapshots
-GET    /api/research/export/demographics
-GET    /api/research/export/procedures
-GET    /api/research/export/financial
-GET    /api/research/export/outcomes
-GET    /api/research/export/satisfaction
-```
-
-### Admin
-```
-GET    /api/admin/users
-POST   /api/admin/users
-DELETE /api/admin/users/:id
-GET    /api/admin/learnings
-DELETE /api/admin/learnings/:id
-GET    /api/admin/transcription-status
-GET    /api/stats
-```
-
-### Webhooks
-```
-POST   /api/webhooks/whatsapp             ← Meta WhatsApp
-POST   /api/webhooks/readai               ← Read.ai meeting transcriptions
-```
+**The transcript.** Because the practice is accountable for what was said in its name, and because the only way to
+improve any of this is to read what actually happened rather than what was supposed to happen.
 
 ---
 
-## Database Schema — All 20 Tables
+## The handover, from both sides
 
-PostgreSQL via Neon serverless. ORM: Drizzle ORM with `drizzle-zod` for validation.
+Most escalation designs are built from the operator's side and feel like a dead end from the patient's. The one
+that works is the one modelled on what the front desk already does, which is to say plainly that they will check,
+then check, then come back.
 
-```sql
--- Identity & Auth
-sessions                    -- Express session store
-tenants                     -- Multi-tenant isolation (one per clinic)
-users                       -- Clinic staff accounts (super_admin / admin / user)
-password_reset_tokens
-google_whitelist            -- Allowed Google OAuth emails
+From the patient's side there is no visible transfer, no ticket number, no notice that a bot has given up. The
+assistant says it is confirming with the practice, and then some time later it returns with the answer. Nothing in
+that sequence asks the patient to do anything differently.
 
--- CRM / Patient Management
-patients                    -- Full patient records (CPF, procedures, status)
-patient_interactions        -- Timeline of all patient touchpoints
-patient_files               -- Documents linked to patients
-patient_tasks               -- Task assignments per patient
-patient_consents            -- LGPD consent records per patient per purpose
+From the practice's side, an escalation arrives as a short structured prompt with only what is needed to answer it:
+who is asking, what they asked, and where the conversation was going. Not a link to a system. Not a login. The
+answer goes back in plain language and the assistant handles the rest, which includes remembering the answer.
 
--- AI & Conversations
-ai_conversations            -- Internal AI chat sessions
-ai_chat_settings            -- Per-tenant AI configuration
-whatsapp_conversations      -- All VIZZ conversations (JSONB messages, stage, scheduling data)
-voice_transcripts           -- Voice recorder transcriptions
-
--- Scheduling & Finance
-appointments                -- Consultations (date, time, confirmed, attended)
-consultation_payments       -- Payment tracking per consultation
-
--- Tasks
-tasks                       -- Internal task management
-task_categories / task_tags / task_projects / task_tag_links / task_assignees / task_attachments / task_comments
-
--- System
-plugins                     -- Feature flags / plugin registry
-tenant_plugins              -- Per-tenant plugin activation
-tenant_integrations         -- CRM and calendar integration credentials
-audit_logs                  -- LGPD audit trail (who accessed what, when)
-```
-
-### whatsapp_conversations — Key Column Detail
-
-```sql
-CREATE TABLE whatsapp_conversations (
-  id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  phone             TEXT NOT NULL,
-  tenant_id         VARCHAR,
-  patient_name      TEXT,
-  scheduling_stage  TEXT,        -- none / initial_contact / collecting_nome /
-                                 -- collecting_cpf / collecting_email /
-                                 -- awaiting_payment / scheduled / consulta_realizada / lost
-  scheduling_data   JSONB,       -- cpf, email, procedure, payment_method,
-                                 -- franAlertedAt, franConfirmed, attendanceCheckSent,
-                                 -- pendingDoubts[], followUpCount
-  messages          JSONB,       -- array of {role, content, timestamp}, max 30
-  follow_up_at      TIMESTAMP,   -- next scheduled follow-up
-  follow_up_count   INTEGER,     -- 0–5 (stops at 5)
-  last_message_at   TIMESTAMP,
-  last_client_ip    TEXT,        -- Meta server IP (audit trail)
-  created_at        TIMESTAMP
-);
-```
+The thing that makes this work is that a handover is not treated as a failure to be minimised. It is a feature the
+practice is paying for. Once you see it that way the design decisions stop fighting each other.
 
 ---
 
-## Qualification State Machine — Full Stage Map
+## Four things that break, in the order they bit
 
-```
-[none]
-    │ Patient sends first message
-    ▼
-[initial_contact]
-    │ VIZZ greets, asks: particular or convenio?
-    ▼
-[asked_particular_or_convenio]
-    ├── "convenio" → [asked_convenio_name] → handoff to Fran → [handoff]
-    └── "particular" →
-            │ VIZZ explains R$500 consultation fee
-            ▼
-        [asked_valor_ok]
-            │ Patient agrees
-            ▼
-        [collecting_nome]
-            │ Name extracted
-            ▼
-        [collecting_cpf]
-            ├── CPF valid → next
-            └── foreign patient → accept passport format
-            ▼
-        [collecting_email]
-            ▼
-        [collecting_telefone]
-            ▼
-        [awaiting_payment]
-            │ Patient sends PIX receipt
-            ├── Payment detected →
-            │       [payment_confirmed]
-            │           │ Fran alerted (2h SLA)
-            │           ▼
-            │       [scheduled]
-            │           │ Attendance check at 20h on consultation day
-            │           ▼
-            │       [consulta_realizada]  ← stops all follow-ups
-            │
-            └── Patient goes silent → follow-up cadence runs
-                    5 attempts max → [lost]
-```
+**Messages arrive in pieces.** People type the way they speak. One thought arrives as four messages, and answering
+each one separately produces a conversation with a stranger who interrupts. The system waits, briefly, and treats
+what arrives inside that window as one turn. Choosing the window is a judgment call between feeling instant and
+feeling attentive.
 
-Stage transitions detected by:
-1. **Regex patterns** on patient message text (fast, deterministic)
-2. **Claude Haiku** for ambiguous inputs ("não sei", "talvez", etc.)
-3. **Keyword detection** for payment confirmation (PIX receipt patterns)
+**Silent persistence failures.** For a period, conversations were being handled correctly and stored almost not at
+all, and nothing failed loudly enough to notice. The lesson is not about the specific database client. It is that
+the write path deserves its own alarm, because the layer you are least likely to watch is the one that produces no
+symptom until you go looking for something that is no longer there.
+
+**Restarts in the middle of conversations.** A deploy should not cost a patient their context. Conversation state
+has to be recoverable from storage rather than held in memory, which sounds obvious written down and is easy to get
+wrong the first time.
+
+**Voice notes.** A large share of messages in Brazil are audio, and an assistant that cannot hear is not deployable.
+Transcription introduces its own failure: a mis-transcribed word inside a medical question is worse than no
+transcription, so audio is treated as lower confidence input and reaches the boundary layer with that flag attached.
 
 ---
 
-## System Prompt Architecture
+## What is deliberately not in this repository
 
-Every patient message generates a system prompt with these sections injected dynamically:
+The prompt architecture and persona instructions. The classification logic and the confidence thresholds. The
+clinic's knowledge base. The data model. The retention and deletion policy. Anything at all derived from a patient
+conversation.
 
-```
-1. PERSONA DEFINITION
-   — VIZZ's name, role, clinic name, zero-emoji rule, regional tone (RS/Brazil)
-
-2. CLINICAL KNOWLEDGE BASE
-   — 12+ procedures with descriptions, prices, recovery times, contraindications
-   — Sourced from: mamoplastia, lipoaspiração, lipoaspiração HD, cruroplastia,
-     rinoplastia, blefaroplastia, abdominoplastia, lifting facial, otoplastia,
-     ninfoplastia, ginecomastia, lipoenxertia
-
-3. CURRENT PATIENT CONTEXT
-   — Name (if known), procedure interest, payment method
-   — CPF / email / phone collection status
-   — Prior CRM record if patient exists
-
-4. STAGE-SPECIFIC INSTRUCTIONS
-   — What to do and NOT do in the current stage
-   — Specific phrasing constraints per stage
-
-5. CONVERSATION HISTORY
-   — Last N messages (up to 30) formatted as role/content pairs
-
-6. BEHAVIORAL CONSTRAINTS
-   — Do not repeat questions already answered
-   — Emit [VIZZ_DOUBT:text] when uncertain
-   — Emit [VIZZ_LOST] if patient is clearly disengaging
-   — Greet with correct time-of-day (Brasília timezone)
-
-7. LEARNED BEHAVIORS
-   — Accumulated feedback from real conversations stored in DB
-   — Synced to Google Sheets (learnings tab)
-```
-
-Total prompt size: **~3,000–4,500 tokens** per patient message.
-
----
-
-## Multi-Tenancy
-
-The system supports multiple clinics (tenants) from a single deployment:
-
-- All DB queries scoped by `tenant_id`
-- WhatsApp phone numbers mapped to tenant UUIDs via `META_WHATSAPP_TENANT_MAP` env var
-- Each tenant has isolated: patients, conversations, staff accounts, settings
-- Currently deployed for one tenant: Vizzotto Cirurgia Plástica
-
----
-
-## Security
-
-| Layer | Implementation |
-|-------|---------------|
-| Webhook integrity | HMAC-SHA256 signature on all inbound Meta payloads |
-| Session auth | Express sessions with PostgreSQL session store |
-| Role-based access | `super_admin` / `admin` / `user` — enforced per endpoint |
-| Admin phone whitelist | Hardcoded set of whitelisted numbers for VIZZ admin mode |
-| LGPD compliance | Consent records, soft-delete, anonymization, audit log, data export |
-| Token validation | WhatsApp access token checked against Meta API on every server startup |
-
----
-
-## Frontend — Internal Dashboard
-
-The system includes a full web dashboard (not patient-facing):
-
-| Tech | Details |
-|------|---------|
-| Framework | React 18 + TypeScript |
-| Build | Vite |
-| Routing | Wouter |
-| Server state | TanStack Query (React Query) |
-| UI | Tailwind CSS + shadcn/ui + Radix UI primitives |
-| Auth | Context-based with protected routes |
-
-Key dashboard pages:
-- **CRM Pipeline** — Kanban board with lead stages, Excel export
-- **Patient 360** — Full patient record with all interactions, files, tasks
-- **VIZZ History** — Three-panel conversation viewer (list / transcript / lead summary card)
-- **VIZZ Real Conversations** — Read-only view of active patient conversations from DB
-- **Appointments** — Scheduling with no-show analytics
-- **AI Chat** — Internal AI assistant with full patient context
-- **Voice Recorder** — Audio transcription and analysis
-- **Google Drive** — File browser and patient folder management
-- **Finance** — DRE, transactions, payment tracking
-- **Admin** — User management, VIZZ training data, token status
-
----
-
-## Deployment
-
-| Aspect | Details |
-|--------|---------|
-| Host | Replit (always-on) |
-| Process | Single Node.js process (Express + background timers) |
-| Port | 5000 (internal), exposed via Replit proxy |
-| Database | Neon serverless PostgreSQL (connection pooling built-in) |
-| Restart | Replit workflow — `fuser -k 5000/tcp && npm run dev` |
-| Cost | ~$45/month (Replit Core $25 + Claude Pro $20) |
-
----
-
-## Known Technical Challenges Solved
-
-### 1. Neon HTTP Adapter Silent Bug
-`INSERT ... RETURNING *` returned empty arrays without throwing. `null` timestamps serialized as `""`. Fixed by bypassing Drizzle ORM for all `whatsapp_conversations` writes — raw SQL with explicit `TIMESTAMP` casts, followed by a separate `SELECT` to retrieve the inserted row.
-
-### 2. Parallel GitHub Push Race Condition
-The GitHub Contents API rejects concurrent commits to the same branch. Fixed by sequential file uploads (one `PUT` at a time) instead of `Promise.all()`.
-
-### 3. Name Extraction Bypass
-When a CRM patient record already existed, name extraction was skipped — causing VIZZ to ask for names already known. Fixed by making extraction unconditional and updating the CRM record when a new name is found in the conversation.
-
-### 4. Audio Transcription Language Lock
-Early Groq Whisper calls had `language: "pt"` hardcoded, causing poor transcription for English and Spanish speakers. Fixed by removing the `language` parameter — Whisper auto-detects PT/EN/ES accurately.
-
-### 5. Conversation Recovery After Restart
-In-memory conversation cache lost on server restart. Fixed by: persist every message to PostgreSQL synchronously, load all active conversations from DB on startup, merge with Google Sheets data as secondary source.
+The commercial reason is the obvious one. The better reason is that the escalation rules are safety logic that was
+tuned against one clinician's judgment, in one specialty, in one country, under one legal regime. Copied into a
+different practice without that judgment behind them they would look like a head start and behave like a liability.
+Anyone building in this space should tune their own boundary against their own clinician. The part worth taking
+from this document is the argument for having a boundary layer at all.

@@ -1,220 +1,116 @@
-# VIZZ — Example Conversations
+# Illustrated behaviour
 
-Real examples of how VIZZ handles different patient and admin scenarios.
-All patient names and personal data have been anonymized.
+Six short scenes showing what the assistant is designed to do at the moments that matter. They are written to
+illustrate behaviour, not transcribed from the clinic. Nothing here is a real patient, a real message, or a real
+answer, and no real conversation, price, document or name appears anywhere in this repository.
 
----
-
-## Patient Conversations
-
-### Example 1: First Contact — Warm Lead From Instagram
-
-**Patient:** Oi, boa tarde! Vi o perfil do Dr. Mateus no Instagram e tenho interesse em fazer uma lipoaspiração.
-
-**VIZZ:** Boa tarde! Que ótimo que você nos encontrou pelo Instagram. A lipoaspiração é um dos procedimentos mais realizados pelo Dr. Mateus — ele tem uma técnica muito refinada que permite resultados naturais com uma recuperação tranquila.
-
-Para te passar as informações certas, você tem alguma região específica em mente? Abdômen, flancos, costas?
-
-**Patient:** Abdômen e flancos. Já tive gestação e quero recuperar o contorno.
-
-**VIZZ:** Entendo perfeitamente — pós-gestação é uma das situações mais comuns para quem busca lipo nessas regiões. Dependendo da avaliação do Dr. Mateus, às vezes combina bem com outros procedimentos complementares, mas isso ele avalia na consulta de acordo com cada caso.
-
-A consulta com o Dr. Mateus custa R$ 500,00. Ela é fundamental para ele avaliar o seu caso pessoalmente, definir a melhor abordagem e tirar todas as suas dúvidas antes de qualquer decisão. Esse valor é abatido do procedimento se você decidir avançar.
-
-Como posso te chamar?
-
-**Patient:** Ana.
-
-**VIZZ:** Oi, Ana! Para registrar seu interesse e a nossa equipe entrar em contato para confirmar a agenda, preciso de mais alguns dados. Qual o seu CPF?
-
-*(Conversation continues through data collection → scheduling)*
+Each scene is in Portuguese, because the voice work is most of the point and it does not survive translation, with
+a short note in English underneath saying what is being demonstrated and why it was hard.
 
 ---
 
-### Example 2: Medical Doubt — Escalation to Fran
+## 1. The first message
 
-**Patient:** Tenho hipotireoidismo controlado com levotiroxina. Isso contraindica a mamoplastia?
+> **Paciente:** oi, vi o perfil de voces e queria saber sobre uma cirurgia
+>
+> **Assistente:** Oi! Que bom que voce entrou em contato. Me conta um pouco, qual procedimento chamou sua atencao?
 
-**VIZZ:** Que pergunta importante, e muito certa de fazer antes de qualquer decisão. Vou confirmar isso diretamente com o Dr. Mateus — não quero te passar uma informação sem ter certeza, porque cada caso tem suas particularidades.
+Two sentences, one question, and nothing asked that has not been earned yet. The temptation at this point is to
+open an intake form, because the operational value of a first message is the data in it. That instinct costs you
+the conversation. Someone who has been thinking about a procedure for years and finally typed something at eleven
+at night is not ready to be processed. Sequencing is a trust decision before it is a data decision.
 
-Te retorno em breve. Enquanto isso, tem mais alguma dúvida sobre o procedimento em si que eu possa te ajudar?
-
----
-
-*System sends to Fran (WhatsApp +55 51 995200513):*
-
-> "Fran, preciso da sua orientação antes de responder à lead. Nome: Carla (+55 51 9xxxx-xxxx). Ela tem hipotireoidismo controlado com levotiroxina e quer saber se isso contraindica mamoplastia de aumento. Pode verificar com o Dr. Mateus e me responder aqui?"
-
-*Fran replies 8 minutes later:*
-
-> "Hipotireoidismo controlado não contraindica. Ela precisa trazer exames recentes de TSH e T4 livre para a consulta, que é padrão."
+Also note what is absent: no greeting template, no company signature, no offer to help you today. Every one of
+those reads as a machine to a Brazilian reader, and each one had to be found in a real conversation and removed by
+name.
 
 ---
 
-**VIZZ:** Carla, confirmei com o Dr. Mateus: hipotireoidismo controlado com levotiroxina não contraindica a mamoplastia. Você precisaria trazer exames recentes de TSH e T4 livre para a consulta — é o padrão para avaliar o caso com segurança antes de qualquer procedimento.
+## 2. The question that must not be answered
 
-Ficou alguma outra dúvida?
+> **Paciente:** eu tomo um remedio controlado ha uns dois anos, isso impede a cirurgia?
+>
+> **Assistente:** Essa é uma pergunta importante e eu prefiro nao te responder por conta propria. Vou confirmar com
+> a equipe e te retorno com a resposta certa, tudo bem?
 
----
+This is the whole product in three lines.
 
-### Example 3: Patient Who Tested the Limits
+The assistant has enough general knowledge to produce a fluent answer here, and a fluent answer would be worse than
+useless, because the patient would act on it. What happens instead is that the boundary layer refuses the send,
+the question goes to the practice with the context needed to answer it, and the reply comes back into the same
+conversation later in the assistant's voice.
 
-**Patient:** Você é um robô?
-
-**VIZZ:** Sou a Vizz, consultora da Vizzotto Cirurgia Plástica. Estou aqui para te ajudar com informações sobre os procedimentos e facilitar o contato com o Dr. Mateus.
-
-Você tinha alguma dúvida ou interesse em algum procedimento?
-
-**Patient:** Mas você é humana?
-
-**VIZZ:** Sou a consultora digital da clínica — posso te ajudar com informações, tirar dúvidas sobre procedimentos e te conectar com a equipe quando necessário. Para tudo que for específico do seu caso, o Dr. Mateus avalia pessoalmente na consulta.
-
-Posso te ajudar com alguma coisa?
+Notice that it does not say it is unable to help, does not apologise twice, and does not hand over a phone number.
+From the patient's side nothing has broken. Someone is checking.
 
 ---
 
-### Example 4: Foreign Patient
+## 3. The patient who tests it
 
-**Patient:** Hi, I'm Sarah, I'm American and I'm visiting Porto Alegre next month. I'm interested in rhinoplasty with Dr. Mateus.
+> **Paciente:** vc é um robo?
+>
+> **Assistente:** Sou sim, sou a assistente virtual da clinica. Consigo te ajudar com as duvidas mais comuns e com
+> o agendamento, e o que for clinico eu levo direto pra equipe.
 
-**VIZZ:** Hi Sarah! Welcome — many international patients choose Dr. Mateus for procedures during their time in Brazil. He specializes in rhinoplasty with a very natural, balanced approach.
+Answered plainly, immediately, without embarrassment.
 
-The consultation is R$ 500,00, which is credited toward the procedure if you decide to proceed. It's essential for Dr. Mateus to evaluate your case in person before any decision.
-
-Since you're from the US, I'll need a passport number instead of a Brazilian CPF for our records. Could you share that when you're ready?
-
----
-
-### Example 5: Proactive Follow-Up (24h Silence)
-
-**VIZZ:** Oi! A gente ficou no meio da nossa conversa ontem e não quero que sua dúvida fique sem resposta.
-
-Se quiser retomar, é só me dizer — podemos continuar de onde paramos ou começar de novo, como preferir. O Dr. Mateus ainda tem agenda disponível nas próximas semanas.
-
-**Patient:** Oi, desculpa, estava no trabalho. Quero sim continuar.
-
-**VIZZ:** Não precisa pedir desculpa — a vida acontece. Ficamos na parte do seu CPF. Quando tiver um minutinho, pode me passar?
+Every version of this that tried to deflect made things worse. Patients ask because they want to know how much to
+trust what they are reading, which is a completely reasonable thing to want to know, and a straight answer that
+also states the boundary tends to increase engagement rather than end it. People are fine talking to software. They
+are not fine being deceived by it.
 
 ---
 
-### Example 6: Patient Decides Not to Proceed
+## 4. Something the assistant already knows
 
-**Patient:** Olha, pensei melhor e não vou conseguir financeiramente agora. Talvez daqui uns meses.
+> **Paciente:** desculpa, esqueci de dizer, meu nome é [nome]
+>
+> **Assistente:** Ja tinha anotado do seu primeiro contato, [nome], obrigada! Sobre o que a gente falou antes...
 
-**VIZZ:** Entendo perfeitamente, Maria — essas decisões precisam ser feitas no momento certo pra você, sem pressa. Quando estiver pronta, pode me chamar aqui que retomamos de onde paramos.
-
-Fico na torcida por você.
-
-*(System marks lead as "paused" — next follow-up in 30 days, final one at 90 days)*
-
----
-
-## Admin Conversations — VIZZ Talking to Fran
-
-These conversations happen on Fran's personal WhatsApp number. VIZZ recognizes her number and switches to admin mode automatically.
+The single fastest way to reveal a machine is to ask for something the person has already given. It happened in
+early versions and it is the failure that generated the most work, because extracting a name from natural speech
+means catching every form a person might use to introduce themselves, and half of them do not look like
+introductions at all.
 
 ---
 
-### Admin Example 1: Daily Summary
+## 5. The follow up
 
-**Fran:** Vizz, me dá um resumo das conversas de hoje.
+> **Assistente:** Oi [nome], tudo bem? Fiquei na duvida se voce ainda tinha alguma pergunta sobre o que a gente
+> conversou. Se quiser retomar, é so me chamar por aqui.
 
-**VIZZ:** Fran, aqui está o resumo de hoje (08/06/2026):
+One message, after a defined silence, with no urgency and no offer.
 
-3 conversas ativas:
-- Ana Silva (+55 51 9xxxx-1234): aguardando CPF, está qualificada para lipo abdômen e flancos. Última mensagem há 2h.
-- Carla Mendes (+55 51 9xxxx-5678): pagamento PIX pendente. Ela confirmou interesse na mamoplastia e já sabe o valor da consulta. Pode precisar de follow-up.
-- Roberto Lima (+55 51 9xxxx-9012): consulta agendada para amanhã às 14h, confirmação de presença enviada hoje às 9h — respondeu que vai.
-
-1 dúvida pendente respondida:
-- Pergunta sobre hipotireoidismo (Carla) — já repassei sua orientação.
-
-Quer que eu detalhe algum caso?
+Follow up is where assistants become unpleasant, because the operational incentive is to push and the appropriate
+behaviour is to leave a door open. The rule that came out of watching this go wrong is that a follow up may
+acknowledge and invite, and may not ask for a decision.
 
 ---
 
-### Admin Example 2: Fran Asking About a Specific Patient
+## 6. The patient who is not going ahead
 
-**Fran:** Me fala sobre a Ana que mandou mensagem sobre lipo.
+> **Paciente:** obrigada, mas acho que nao vou fazer agora
+>
+> **Assistente:** Imagina, obrigada por me contar! Se mudar de ideia mais pra frente, ou se surgir qualquer duvida,
+> pode me chamar aqui a hora que for.
 
-**VIZZ:** Fran, aqui está o que tenho sobre a Ana:
+No retention attempt. No discount. No final question designed to keep the thread alive.
 
-Nome: Ana Silva
-Telefone: +55 51 9xxxx-1234
-Interesse: Lipoaspiração — abdômen e flancos, pós-gestação
-Estágio: aguardando CPF (ela confirmou o valor da consulta e disse que quer agendar)
-Última mensagem: hoje às 14h32
-Próximo follow-up programado: amanhã às 14h32 se ela não responder
-
-Ela está bem qualificada — já sabe o valor, o procedimento, e disse que quer agendar. Só não passou o CPF ainda.
-
-Quer que eu envie um follow-up agora ou aguarda o prazo normal?
+An assistant carrying a clinic's name is a piece of that clinic's bedside manner, and a person who decides against
+elective surgery has made a legitimate decision that deserves a graceful ending. This is also, incidentally, the
+version that produces the most people who come back.
 
 ---
 
-### Admin Example 3: Emergency Stop — Pause All Contacts
+## What these are meant to show
 
-**Fran:** Vizz, pause os atendimentos hoje. Estamos com um imprevisto na clínica.
+The interesting engineering in a clinical assistant is not in the answers. Any competent model produces scene one.
+Scene two is the one that requires a system: a stage that runs after generation, that can veto a send, that routes
+the question to a human, and that carries the human's answer back into the conversation without the patient having
+to repeat themselves.
 
-**VIZZ:** Entendido, Fran. Vou confirmar: você quer que eu pause todos os follow-ups automáticos de hoje? Isso significa que não enviarei mensagens proativas para nenhum lead até você me pedir para retomar. Respostas a mensagens que chegarem ainda serão enviadas normalmente.
+Everything else in these six scenes is voice work, which is unglamorous, iterative, and done by reading real
+conversations every week and removing one machine tell at a time.
 
-Pode confirmar "sim" para eu pausar?
-
-**Fran:** Sim, pode pausar.
-
-**VIZZ:** Feito, Fran. Follow-ups automáticos pausados. Vou retomar amanhã às 8h no horário padrão, a menos que você me peça antes.
-
-*(System sets `vizzPausedUntil` to midnight and logs to `vizzPauseLog`)*
-
----
-
-### Admin Example 4: After a Consultation — Fran Confirms Attendance
-
-*System sends to Fran at 20h:*
-
-> "Fran, verificando sobre a consulta de hoje: Pedro Alves estava agendado para 14h. Ele compareceu?"
-
-**Fran:** Sim, compareceu. Correu bem.
-
-**VIZZ:** Ótimo, vou atualizar o registro dele e enviar a mensagem de acompanhamento.
-
-*(System updates `schedulingStage` to `consulta_realizada`, sends follow-up to patient)*
-
-*VIZZ to Pedro (patient):*
-
-> "Pedro, que ótimo ter te recebido hoje! Espero que a consulta com o Dr. Mateus tenha esclarecido todas as suas dúvidas. Se precisar de qualquer informação adicional ou quiser avançar para o próximo passo, é só me chamar aqui."
-
----
-
-### Admin Example 5: Fran Answering a Complex Doubt With Multiple Patients
-
-**Fran:** Vizz, tenho duas perguntas aqui. A Carla perguntou sobre hipotireoidismo — pode fazer sim, precisa trazer TSH recente. E o João perguntou sobre anticoagulante — esse precisa parar a medicação antes da cirurgia com autorização do cardiologista.
-
-**VIZZ:** Anotado, Fran. Vou usar o código de referência de cada conversa:
-
-- Carla (#0021 — hipotireoidismo): vou passar que hipotireoidismo controlado não contraindica, e que ela precisa trazer exames de TSH recentes.
-- João (#0034 — anticoagulante): vou passar que o uso de anticoagulante requer suspensão prévia com autorização do cardiologista, e que o Dr. Mateus avalia o timing na consulta.
-
-Posso enviar as respostas para os dois agora?
-
-**Fran:** Pode.
-
-**VIZZ:** Enviado para ambos.
-
-*(Two patient conversations updated and messages sent within seconds)*
-
----
-
-## What These Conversations Show
-
-Reading these exchanges, a few things stand out:
-
-**VIZZ knows what she doesn't know.** In the medical doubt examples, she doesn't guess. She goes to Fran. This is the single most important behavioral choice in the system.
-
-**The admin experience is WhatsApp.** Fran doesn't log into a dashboard. She doesn't learn a new tool. She uses the same app she uses for everything else. VIZZ meets her there.
-
-**Tone shifts by context.** With patients: warm, gentle, patient-paced. With Fran: direct, structured, efficient. Same AI, same model, different persona for each relationship.
-
-**The escalation is seamless from both sides.** The patient never knows Fran was involved. Fran gets everything she needs to answer in one message. The answer flows back to the patient in seconds.
-
-This is what humanized AI looks like in practice — not mimicking emotions, but reflecting how real professionals actually communicate and collaborate.
+If you are building something in this space, the part of this worth copying is the shape of scene two, tuned
+against your own clinician's judgment rather than mine. Write to **ingridleiria@gmail.com**.
